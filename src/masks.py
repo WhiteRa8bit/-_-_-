@@ -39,3 +39,8 @@ def mask_account_card(account_card: str) -> str:
         masked_number = get_mask_card_number(number)
 
     return f"{name} {masked_number}"
+
+
+def get_date(data_time: str) -> str:
+    date_parts = data_time[:10].split("-")
+    return ".".join(date_parts[::-1])
