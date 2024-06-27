@@ -17,7 +17,7 @@ def get_mask_card_number(card_number: str) -> str:
 
 
 def get_mask_account(account_number: str) -> str:
-    """Функция принемает номер счёта и возвращает последние 6 цифр, первые две замаскированы """
+    """Функция принемает номер счёта и возвращает последние 6 цифр, первые две замаскированы"""
     mask_account_number = []
     last_six_digits = account_number[-6:]
     for i, num in enumerate(last_six_digits):
