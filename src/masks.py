@@ -1,0 +1,28 @@
+def get_mask_card_number(card_number: str) -> str:
+    """Функция принемает номер карты и маскирует 6 цифр в серидине"""
+    mask_card_number = []
+    visible_start = 6
+    visible_end = 4
+
+    for i, num in enumerate(card_number):
+        if i < visible_start or i >= len(card_number) - visible_end:
+            mask_card_number.append(num)
+        else:
+            mask_card_number.append("*")
+
+        if (i + 1) % 4 == 0 and (i + 1) != len(card_number):
+            mask_card_number.append(" ")
+
+    return "".join(mask_card_number)
+
+
+def get_mask_account(account_number: str) -> str:
+    """Функция принемает номер счёта и возвращает последние 6 цифр, первые две замаскированы """
+    mask_account_number = []
+    last_six_digits = account_number[-6:]
+    for i, num in enumerate(last_six_digits):
+        if i < 2:
+            mask_account_number.append("*")
+        else:
+            mask_account_number.append(num)
+    return "".join(mask_account_number)
