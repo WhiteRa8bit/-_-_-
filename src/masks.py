@@ -29,6 +29,7 @@ def get_mask_account(account_number: str) -> str:
 
 
 def mask_account_card(account_card: str) -> str:
+    """Функция принемает и маскирует номера карт и счетов"""
     parts = account_card.split()
     name = " ".join(parts[:-1])
     number = parts[-1]
@@ -42,5 +43,6 @@ def mask_account_card(account_card: str) -> str:
 
 
 def get_date(data_time: str) -> str:
+    """Функция принемает дату, время и возвращает дату в формате ХХ.ХХ.ХХХХ"""
     date_parts = data_time[:10].split("-")
     return ".".join(date_parts[::-1])
