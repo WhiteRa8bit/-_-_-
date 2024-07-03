@@ -28,20 +28,6 @@ def get_mask_account(account_number: str) -> str:
     return "".join(mask_account_number)
 
 
-def mask_account_card(account_card: str) -> str:
-    """Функция принемает и маскирует номера карт и счетов"""
-    parts = account_card.split()
-    name = " ".join(parts[:-1])
-    number = parts[-1]
-
-    if name.startswith("Счет"):
-        masked_number = get_mask_account(number)
-    else:
-        masked_number = get_mask_card_number(number)
-
-    return f"{name} {masked_number}"
-
-
 def get_date(data_time: str) -> str:
     """Функция принемает дату, время и возвращает дату в формате ХХ.ХХ.ХХХХ"""
     date_parts = data_time[:10].split("-")
