@@ -9,6 +9,6 @@ def filter_by_state(list_for_filter: list, state: str = 'EXECUTED') -> list:
 
 
 def sort_by_date(list_for_sort: list, ascending: bool = True) -> list:
-    """Сортирует список словарей по ключу date. Возвращает новый список по убыванию, опционально для reverse_sort"""
+    """Сортирует список словарей по ключу date. Возвращает новый список по убыванию, опционально для ascending"""
     sorted_list = sorted(list_for_sort, key=lambda x: x["date"], reverse=ascending)
     return sorted_list
