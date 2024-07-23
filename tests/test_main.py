@@ -1,5 +1,5 @@
 import pytest
-from src.masks import get_mask_account, get_mask_card_number
+from src.masks import get_mask_account, get_mask_card_number, get_date
 from src.processing import filter_by_state, sort_by_date
 from src.widget import mask_account_card
 
@@ -134,3 +134,45 @@ def test_sort_by_date(sort_data):
 def test_sort_by_date_value_error(data, exception):
     with pytest.raises(exception):
         sort_by_date(data)
+
+
+@pytest.fixture
+def correct_dates():
+    return [
+        ('2019-07-03T18:35:29.512364', '03.07.2019'),
+        ('2018-06-30T02:08:58.425572', '30.06.2018'),
+        ('2018-09-12T21:27:25.241689', '12.09.2018'),
+        ('2018-10-14T08:21:33.419441', '14.10.2018')
+    ]
+
+
+@pytest.fixture
+def correct_dates():
+    return [
+        ('2019-07-03T18:35:29.512364', '03.07.2019'),
+        ('2018-06-30T02:08:58.425572', '30.06.2018'),
+        ('2018-09-12T21:27:25.241689', '12.09.2018'),
+        ('2018-10-14T08:21:33.419441', '14.10.2018')
+    ]
+
+
+@pytest.fixture
+def incorrect_dates():
+    return [
+        (1234567890, ValueError),
+        (['2019-07-03T18:35:29.512364'], ValueError),
+        ('2019/07/03T18:35:29.512364', ValueError),
+        ('2019-07-03', ValueError),
+        ('invalid-date-string', ValueError)
+    ]
+
+
+@pytest.mark.parametrize("input_date, expected_output", [
+    ('2019-07-03T18:35:29.512364', '03.07.2019'),
+    ('2018-06-30T02:08:58.425572', '30.06.2018'),
+    ('2018-09-12T21:27:25.241689', '12.09.2018'),
+    ('2018-10-14T08:21:33.419441', '14.10.2018')
+])
+def test_get_date_correct(input_date, expected_output):
+    assert get_date(input_date) == expected_output
+

@@ -49,7 +49,39 @@ def get_mask_account(account_number: str) -> str:
 
     return "".join(mask_account_number)
 
+
 def get_date(data_time: str) -> str:
-    """Функция принемает дату, время и возвращает дату в формате ХХ.ХХ.ХХХХ"""
-    date_parts = data_time[:10].split("-")
-    return ".".join(date_parts[::-1])
+    """Функция принимает дату и время и возвращает дату в формате ХХ.ХХ.ХХХХ"""
+    try:
+        if not isinstance(data_time, str):
+            raise ValueError("Значение должно быть строкой")
+
+        # Проверяем, что строка имеет достаточную длину для даты
+        if len(data_time) < 10:
+            raise ValueError("Некорректный формат даты")
+
+        # Извлекаем только часть с датой
+        date_part = data_time[:10]
+
+        # Проверяем, что дата содержит именно символ '-'
+        if '-' not in date_part:
+            raise ValueError("Дата должна содержать символ '-' как разделитель")
+
+        date_parts = date_part.split("-")
+
+        if len(date_parts) != 3:
+            raise ValueError("Некорректный формат даты")
+
+        year, month, day = date_parts
+
+        # Проверяем, что части даты являются числами
+        if not (year.isdigit() and month.isdigit() and day.isdigit()):
+            raise ValueError("Части даты должны быть числами")
+
+        # Проверяем, что месяц и день имеют правильную длину
+        if len(month) != 2 or len(day) != 2:
+            raise ValueError("Месяц и день должны быть двузначными")
+
+        return ".".join(date_parts[::-1])
+    except Exception as e:
+        raise ValueError(f"Некорректный ввод: {e}")
