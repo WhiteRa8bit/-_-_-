@@ -1,5 +1,17 @@
 def get_mask_card_number(card_number: str) -> str:
-    """Функция принемает номер карты и маскирует 6 цифр в серидине"""
+    """Функция принимает номер карты и маскирует 6 цифр в середине"""
+    if not isinstance(card_number, str):
+        raise TypeError("Номер карты должен быть строкой.")
+
+    if not card_number:
+        raise ValueError("Номер карты не может быть пустой строкой.")
+
+    if not card_number.isdigit():
+        raise ValueError("Номер карты должен содержать только цифры.")
+
+    if len(card_number) not in (16, 18):
+        raise ValueError("Номер карты должен состоять из 16 или 18 цифр.")
+
     mask_card_number = []
     visible_start = 6
     visible_end = 4
@@ -18,6 +30,15 @@ def get_mask_card_number(card_number: str) -> str:
 
 def get_mask_account(account_number: str) -> str:
     """Функция принемает номер счёта и возвращает последние 6 цифр, первые две замаскированы"""
+    if not account_number:
+        raise ValueError("Номер счета не может быть пустой строкой.")
+
+    if not account_number.isdigit():
+        raise ValueError("Номер счета должен содержать только цифры.")
+
+    if len(account_number) != 20:
+        raise ValueError("Номер счета должен состоять из 20 цифр.")
+
     mask_account_number = []
     last_six_digits = account_number[-6:]
     for i, num in enumerate(last_six_digits):
@@ -25,8 +46,8 @@ def get_mask_account(account_number: str) -> str:
             mask_account_number.append("*")
         else:
             mask_account_number.append(num)
-    return "".join(mask_account_number)
 
+    return "".join(mask_account_number)
 
 def get_date(data_time: str) -> str:
     """Функция принемает дату, время и возвращает дату в формате ХХ.ХХ.ХХХХ"""
