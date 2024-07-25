@@ -1,4 +1,6 @@
 def filter_by_currency(transactions, currency_code):
+    """Принимает на вход список словарей, представляющих транзакции,
+    возвращает транзакции, где валюта операции соответствует заданной"""
     if not isinstance(transactions, list):
         raise TypeError("Колекция транзакций должна быть списком")
     if not isinstance(currency_code, str):
@@ -23,6 +25,7 @@ def filter_by_currency(transactions, currency_code):
 
 
 def transaction_descriptions(transactions):
+    """Принимает список словарей с транзакциями и возвращает описание каждой операции по очереди"""
     if not isinstance(transactions, list):
         raise TypeError("Колекция транзакций должна быть списком")
 
@@ -36,6 +39,7 @@ def transaction_descriptions(transactions):
 
 
 def card_number_generator(start, end):
+    """Генерирует номера карт в заданном диапазоне от 0000 0000 0000 0001 до 9999 9999 9999 9999"""
     if not isinstance(start, int) or not isinstance(end, int):
         raise TypeError("Начальное и конечное значения должны быть целыми числами")
     if start < 1 or end > 9999999999999999 or start > end:
@@ -43,4 +47,3 @@ def card_number_generator(start, end):
 
     for number in range(start, end + 1):
         yield f"{number:016}"
-        
