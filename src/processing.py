@@ -1,10 +1,10 @@
-def filter_by_state(list_for_filter: list, state: str='EXECUTED') -> list:
+def filter_by_state(list_for_filter: list, state: str = "EXECUTED") -> list:
     if not all(isinstance(elem, dict) for elem in list_for_filter):
         raise ValueError("Список должен содержать только словари.")
 
     new_list = []
     for elem in list_for_filter:
-        if elem.get('state') == state:
+        if elem.get("state") == state:
             new_list.append(elem)
     return new_list
 
