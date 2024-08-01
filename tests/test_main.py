@@ -2,6 +2,7 @@ import pytest
 from src.masks import get_mask_account, get_mask_card_number, get_date
 from src.processing import filter_by_state, sort_by_date
 from src.widget import mask_account_card
+from src.decorators import log
 
 
 @pytest.fixture
@@ -176,3 +177,58 @@ def incorrect_dates():
 def test_get_date_correct(input_date, expected_output):
     assert get_date(input_date) == expected_output
 
+#Функции для проверки декоратора log
+
+@log()
+def function_no_args():
+    return "no args"
+
+
+@log(filename="mylog.txt")
+def function_success(x, y):
+    return x + y
+
+
+@log(filename="mylog.txt")
+def function_error(x, y):
+    return x / y
+
+
+def test_log_to_console_success(capsys):
+    result = function_no_args()
+    captured = capsys.readouterr()
+    assert "function_no_args ok." in captured.out
+    assert result == "no args"
+
+
+def test_log_to_console_error(capsys):
+    try:
+        result = function_error(1, 0)
+    except ZeroDivisionError:
+        result = None
+    captured = capsys.readouterr()
+    assert "function_error error:" in captured.out
+    assert "division by zero" in captured.out
+    assert "Inputs: (1, 0), {}" in captured.out
+    assert result is None
+
+
+def test_log_to_file_success():
+    result = function_success(2, 3)
+    assert result == 5
+    with open("mylog.txt", 'r') as f:
+        log_content = f.read()
+    assert "function_success ok." in log_content
+
+
+def test_log_to_file_error():
+    try:
+        result = function_error(1, 0)
+    except ZeroDivisionError:
+        result = None
+    with open("mylog.txt", 'r') as f:
+        log_content = f.read()
+    assert "function_error error:" in log_content
+    assert "division by zero" in log_content
+    assert "Inputs: (1, 0), {}" in log_content
+    assert result is None
