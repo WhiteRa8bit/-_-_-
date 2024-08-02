@@ -3,6 +3,8 @@ import datetime
 
 
 def log(filename=None):
+    """Декоратор для логирования вызова функции.Сохраняет информацию о логах в файле filename.
+    Если не указано, логи выводятся в консоль."""
     def decorator(func):
         @functools.wraps(func)
         def wrapper(*args, **kwargs):
